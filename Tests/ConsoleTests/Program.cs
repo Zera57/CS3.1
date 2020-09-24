@@ -43,8 +43,8 @@ namespace ConsoleTests
 
 		static void Main(string[] args)
 		{
-			var to = new MailAddress("svetik.avtonomov@gmail.com");
-			var from = new MailAddress("svetik.avtonomov2000@gmail.com");
+			var from = new MailAddress("svetik.avtonomov@gmail.com");
+			var to = new MailAddress("svetik.avtonomov2000@gmail.com");
 
 			var message = new MailMessage(from, to);
 
@@ -52,7 +52,7 @@ namespace ConsoleTests
 			message.Subject = "Заголовок письма" + DateTime.Now;
 			message.Body = "Текст письма" + DateTime.Now;
 
-			var client = new SmtpClient("smtp.gmail.com", 465);
+			var client = new SmtpClient("smtp.gmail.com", 587);
 
 			client.EnableSsl = true;
 
