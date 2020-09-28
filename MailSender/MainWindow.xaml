@@ -7,7 +7,7 @@
 		xmlns:m="clr-namespace:MailSender.Models"
 		xmlns:local="clr-namespace:MailSender"
 		mc:Ignorable="d"
-		Title="WpfTestMailSender" Height="380" Width="600" MinWidth="475" MaxWidth="600" MaxHeight="400">
+		Title="WpfTestMailSender" Height="500" Width="680">
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="File">
@@ -33,12 +33,12 @@
 				<TextBlock Text="Ready!"/>
 			</StatusBarItem>
 		</StatusBar>
-		<TabControl>
+        <TabControl Name="TabControl">
 			<TabItem Header="Списки">
 				<DockPanel>
 					<ToolBarTray DockPanel.Dock="Top">
-						<ToolBar Header="Сервера" Band="0">
-							<ComboBox Name="ServerList" Margin="26.5,0,0,0" MinWidth="120" MaxWidth="220"
+						<ToolBar Header="Servers" Band="0">
+							<ComboBox Name="ServerList" Margin="12,0,8,0" MinWidth="130" MaxWidth="220"
 									  SelectedIndex="0"
 									  ItemsSource="{x:Static data:TestData.Servers}"
 									  DisplayMemberPath="Address"
@@ -48,8 +48,8 @@
 							<Button Content="Edit"/>
 							<Button Content="Del"/>
 						</ToolBar>
-						<ToolBar Header="Отправители" Band="1">
-							<ComboBox Name="SenderList" MinWidth="120" MaxWidth="220"
+						<ToolBar Header="Senders" Band="1">
+							<ComboBox Name="SenderList" MinWidth="130" MaxWidth="220"
 									  SelectedIndex="0"
 									  ItemsSource="{x:Static data:TestData.Senders}">
 								<ComboBox.ItemTemplate>
@@ -62,8 +62,8 @@
 							<Button Content="Edit"/>
 							<Button Content="Del"/>
 						</ToolBar>
-						<ToolBar Header="Перейти в планировщик" Band="0">
-							<Button Content="Перейти в планировщик"/>
+						<ToolBar Band="0">
+							<Button Content="Перейти в планировщик" Click="OpenScheduler_Click"/>
 						</ToolBar>
 						<ToolBar Header="Получатели" Band="1">
 							<Button Content="Add"/>
@@ -71,7 +71,7 @@
 							<Button Content="Del"/>
 						</ToolBar>
 					</ToolBarTray>
-					<GroupBox Header="Список получателей">
+					<GroupBox Header="List of recipient">
 						<DataGrid Name="RecipientList" ItemsSource="{x:Static data:TestData.Recipients}" 
 								  AutoGenerateColumns="False"
 								  GridLinesVisibility="Vertical"
@@ -94,10 +94,10 @@
 					</Grid.ColumnDefinitions>
 					<GroupBox Grid.Column="0" Header="Управление">
 						<StackPanel>
-							<Calendar/>
-							<StackPanel>
-							  <Button Content="Отправить"/>
-							  <Button Content="Запланировать"/>
+							<Calendar Height="260" />
+                            <StackPanel>
+                                <Button Content="Отправить" Click="SendButton_Click" Margin="0,3"/>
+                                <Button Content="Запланировать" Margin="0,3"/>
 							</StackPanel>
 						</StackPanel>
 					</GroupBox>

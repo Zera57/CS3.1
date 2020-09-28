@@ -35,7 +35,12 @@ namespace MailSender
 			if (!(SenderList.SelectedItem is Sender sender)) return;
 			if (!(RecipientList.SelectedItem is Recipient recipient)) return;
 			if (!(ServerList.SelectedItem is Server server)) return;
-			if (!(MessageList.SelectedItem is Message message)) return;
+			if (!(MessageList.SelectedItem is Message message))
+			{
+				TabControl.SelectedIndex = 2;
+				MessageBox.Show("Письмо не заполнено", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
 
 			var send_service = new MailSenderService
 			{
@@ -43,7 +48,7 @@ namespace MailSender
 				ServerPort = server.Port,
 				UseSSL = server.UseSSL,
 				Login = server.Login,
-				Password = server.Password
+				Password = TextEncoder.Decode(server.Password)
 			};
 
 			try
@@ -54,6 +59,11 @@ namespace MailSender
 			{
 				MessageBox.Show("Ошибка при отправке почты " + error.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
+		}
+
+		private void OpenScheduler_Click(object sender, RoutedEventArgs e)
+		{
+			TabControl.SelectedIndex = 1;
 		}
 	}
 }
