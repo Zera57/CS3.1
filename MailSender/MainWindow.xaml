@@ -3,6 +3,8 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:data="clr-namespace:MailSender.Data"
+		xmlns:m="clr-namespace:MailSender.Models"
 		xmlns:local="clr-namespace:MailSender"
 		mc:Ignorable="d"
 		Title="WpfTestMailSender" Height="380" Width="600" MinWidth="475" MaxWidth="600" MaxHeight="400">
@@ -36,13 +38,26 @@
 				<DockPanel>
 					<ToolBarTray DockPanel.Dock="Top">
 						<ToolBar Header="Сервера" Band="0">
-							<ComboBox Margin="26.5,0,0,0" MinWidth="120" MaxWidth="220"/>
+							<ComboBox Margin="26.5,0,0,0" MinWidth="120" MaxWidth="220"
+									  SelectedIndex="0"
+									  ItemsSource="{x:Static data:TestData.Servers}"
+									  DisplayMemberPath="Address"
+									  SelectedValuePath="Address"
+							/>
 							<Button Content="Add"/>
 							<Button Content="Edit"/>
 							<Button Content="Del"/>
 						</ToolBar>
 						<ToolBar Header="Отправители" Band="1">
-							<ComboBox MinWidth="120" MaxWidth="220"/>
+							<ComboBox MinWidth="120" MaxWidth="220"
+									  SelectedIndex="0"
+									  ItemsSource="{x:Static data:TestData.Senders}">
+								<ComboBox.ItemTemplate>
+									<DataTemplate DataType="m:Sender">
+										<TextBlock Text="{Binding Name}" ToolTip="{Binding Address}"/>
+									</DataTemplate>
+								</ComboBox.ItemTemplate>
+							</ComboBox>
 							<Button Content="Add"/>
 							<Button Content="Edit"/>
 							<Button Content="Del"/>
@@ -57,8 +72,16 @@
 						</ToolBar>
 					</ToolBarTray>
 					<GroupBox Header="Список получателей">
-						<DataGrid>
-							
+						<DataGrid ItemsSource="{x:Static data:TestData.Recepients}" 
+								  AutoGenerateColumns="False"
+								  GridLinesVisibility="Vertical"
+								  AlternatingRowBackground="LightBlue"
+								  VerticalGridLinesBrush="Gray">
+							<DataGrid.Columns>
+								<DataGridTextColumn Header="ID" MinWidth="30"/>
+								<DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}"/>
+								<DataGridTextColumn Header="Адрес" MinWidth="160" Binding="{Binding Address}"/>
+							</DataGrid.Columns>
 						</DataGrid>
 					</GroupBox>
 				</DockPanel>
@@ -79,75 +102,71 @@
 						</StackPanel>
 					</GroupBox>
 					<GroupBox Grid.Column="1" Header="Задания">
-                        <ListBox></ListBox>
+						<ListBox></ListBox>
 					</GroupBox>
-                    <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="3" Background="Transparent"/>
-                </Grid>
+					<GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="3" Background="Transparent"/>
+				</Grid>
 			</TabItem>
 			<TabItem Header="Письма">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="200" MaxWidth="400"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <GroupBox Grid.Column="0" Header="Список писем">
-                        <ListBox>
-                            <ListBoxItem Content="Pismo1"/>
-                            <ListBoxItem Content="Pismo2"/>
-                            <ListBoxItem Content="Pismo3"/>
-                        </ListBox>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" MinWidth="200" MaxWidth="400"/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+					<GroupBox Grid.Column="0" Header="Список писем">
+                        <ListBox Name="LB_Messages" ItemsSource="{x:Static data:TestData.Messages}" DisplayMemberPath="Subject"/>
                     </GroupBox>
-                    <GroupBox Grid.Column="1" Header="Редактор">
-                        <DockPanel>
-                            <GroupBox Header="Заголовок" DockPanel.Dock="Top">
-                                <TextBox></TextBox>
+					<GroupBox Grid.Column="1" Header="Редактор">
+						<DockPanel>
+							<GroupBox Header="Заголовок" DockPanel.Dock="Top">
+                                <TextBox Text="{Binding SelectedItem.Subject, ElementName=LB_Messages, UpdateSourceTrigger=PropertyChanged}"/>
+							</GroupBox>
+							<GroupBox Header="Тело письма">
+                                <TextBox Text="{Binding SelectedItem.Body, ElementName=LB_Messages}"/>
                             </GroupBox>
-                            <GroupBox Header="Тело письма">
-                                <TextBox></TextBox>
-                            </GroupBox>
-                        </DockPanel>
-                    </GroupBox>
-                </Grid>
-            </TabItem>
+						</DockPanel>
+					</GroupBox>
+				</Grid>
+			</TabItem>
 			<TabItem Header="Статистика">
-                <Grid>
-                    <Grid.Resources>
-                        <Style TargetType="TextBlock">
-                            <Style.Triggers>
-                                <Trigger Property="Grid.Column" Value="0">
-                                    <Setter Property="FontWeight" Value="Bold"/>
-                                    <Setter Property="HorizontalAlignment" Value="Right"/>
-                                </Trigger>
-                                <Trigger Property="Grid.Column" Value="1">
-                                    <Setter Property="Margin" Value="5, 0, 0, 0"/>
-                                </Trigger>
-                                
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Resources>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="200" MaxWidth="400"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Число отправленных писем:"/>
-                    <TextBlock Grid.Column="1" Grid.Row="0" Text="5"/>
+				<Grid>
+					<Grid.Resources>
+						<Style TargetType="TextBlock">
+							<Style.Triggers>
+								<Trigger Property="Grid.Column" Value="0">
+									<Setter Property="FontWeight" Value="Bold"/>
+									<Setter Property="HorizontalAlignment" Value="Right"/>
+								</Trigger>
+								<Trigger Property="Grid.Column" Value="1">
+									<Setter Property="Margin" Value="5, 0, 0, 0"/>
+								</Trigger>
+								
+							</Style.Triggers>
+						</Style>
+					</Grid.Resources>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" MinWidth="200" MaxWidth="400"/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="auto"/>
+						<RowDefinition Height="auto"/>
+						<RowDefinition Height="auto"/>
+						<RowDefinition Height="auto"/>
+					</Grid.RowDefinitions>
+					<TextBlock Grid.Column="0" Grid.Row="0" Text="Число отправленных писем:"/>
+					<TextBlock Grid.Column="1" Grid.Row="0" Text="5"/>
 
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Число отправителей в базе:"/>
-                    <TextBlock Grid.Column="1" Grid.Row="1" Text="5"/>
-                
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Число получателей в базе:"/>
-                    <TextBlock Grid.Column="1" Grid.Row="2" Text="2"/>
+					<TextBlock Grid.Column="0" Grid.Row="1" Text="Число отправителей в базе:"/>
+					<TextBlock Grid.Column="1" Grid.Row="1" Text="5"/>
+				
+					<TextBlock Grid.Column="0" Grid.Row="2" Text="Число получателей в базе:"/>
+					<TextBlock Grid.Column="1" Grid.Row="2" Text="2"/>
 
-                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Число запусков:"/>
-                    <TextBlock Grid.Column="1" Grid.Row="4" Text="6"/>
-                </Grid>
-            </TabItem>
+					<TextBlock Grid.Column="0" Grid.Row="3" Text="Число запусков:"/>
+					<TextBlock Grid.Column="1" Grid.Row="4" Text="6"/>
+				</Grid>
+			</TabItem>
 		</TabControl>
 	</DockPanel>
 </Window>

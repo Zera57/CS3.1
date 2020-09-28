@@ -19,7 +19,7 @@ namespace MailSender.Data
 			.Select(i => new Recipient
 			{
 				Name = $"Отправитель {i}",
-				Address = $"sender_{i}@server.com"
+				Address = $"recipient_{i}@server.com"
 			}).ToList();
 
 		public static List<Server> Servers { get; } = Enumerable.Range(1, 10)
