@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MailSender.Models
 {
-	class Recipeint
+	class Recipient
 	{
 		public string Name { get; set; }
 

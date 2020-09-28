@@ -6,9 +6,9 @@ namespace MailSender.Models
 {
 	class Server
 	{
-		public string Adderss { get; set; }
+		public string Address { get; set; }
 
-		private int _Port;
+		private int _Port = 25;
 
 		public int Port
 		{
