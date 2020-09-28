@@ -29,7 +29,7 @@ namespace MailSender
 		}
 		private void SendButton_Click(object sender, RoutedEventArgs e)
 		{
-			if (TBLogin.Text.Length != 0 && TBPassword.Password.Length != 0 && TBEmailto.Text.Length != 0 && TBSubject.Text.Length != 0 && TBMessage.Text.Length != 0)
+			/*if (TBLogin.Text.Length != 0 && TBPassword.Password.Length != 0 && TBEmailto.Text.Length != 0 && TBSubject.Text.Length != 0 && TBMessage.Text.Length != 0)
 			{
 				EmailSendServiceClass senderService = new EmailSendServiceClass(Data.host, Data.port);
 
@@ -39,7 +39,7 @@ namespace MailSender
 
 				senderService.SendMessage();
 			}
-			else { MessageBox.Show("Type all data"); }
+			else { MessageBox.Show("Type all data"); }*/
 		}
 
 		public static class Data

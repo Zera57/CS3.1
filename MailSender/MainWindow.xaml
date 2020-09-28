@@ -6,26 +6,40 @@
         xmlns:local="clr-namespace:MailSender"
         mc:Ignorable="d"
         Title="WpfTestMailSender" Height="380" Width="600" MinWidth="475" MaxWidth="600" MaxHeight="400">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100*" MinWidth="175"/>
-            <ColumnDefinition Width="100*" MinWidth="300"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label HorizontalAlignment="Center">Login</Label>
-            <TextBox x:Name="TBLogin" Width="150" Height="20" InputScope="EmailUserName"></TextBox>
-            <Label HorizontalAlignment="Center">Password</Label>
-            <PasswordBox x:Name="TBPassword" Width="150" Height="20"></PasswordBox>
-        </StackPanel>
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Left" Height="auto" Width="5"/>
-        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-            <Label Margin="30,0">Email to:</Label>
-            <TextBox x:Name="TBEmailto" Margin="30,10"/>
-            <Label Margin="30,0">Subject</Label>
-            <TextBox x:Name="TBSubject" Margin="30,10"/>
-            <Label Margin="30,0">Message</Label>
-            <TextBox x:Name="TBMessage" Height="100" TextWrapping="Wrap" AcceptsReturn="True" Margin="30,10"/>
-            <Button Width="150" Content="Send" Margin="0,10" Click="SendButton_Click"/>
-        </StackPanel>
-    </Grid>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Create"/>
+                <MenuItem Header="Open"/>
+                <MenuItem Header="Close"/>
+                <MenuItem Header="Save"/>
+                <Separator/>
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+            <MenuItem Header="Service">
+                <MenuItem Header="Parametrs"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About"/>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem DockPanel.Dock="Right">
+                <ResizeGrip/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Text="Ready!"/>
+            </StatusBarItem>
+        </StatusBar>
+        <TabControl>
+            <TabItem Header="Списки">
+                
+            </TabItem>
+            <TabItem Header="Планировщик">
+                
+            </TabItem>
+            <TabItem Header="Письма"></TabItem>
+            <TabItem Header="Статистика"></TabItem>
+        </TabControl>
+    </DockPanel>
 </Window>
