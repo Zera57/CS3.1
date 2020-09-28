@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MailSenderService_lib;
 
 namespace MailSender.Data
 {
@@ -15,7 +16,7 @@ namespace MailSender.Data
 				Address = $"sender_{i}@server.com"
 			}).ToList();
 
-		public static List<Recipient> Recepients { get; } = Enumerable.Range(1, 10)
+		public static List<Recipient> Recipients { get; } = Enumerable.Range(1, 10)
 			.Select(i => new Recipient
 			{
 				Name = $"Отправитель {i}",
@@ -27,7 +28,7 @@ namespace MailSender.Data
 			{
 				Address = $"sender{i}@smtp.com",
 				Login = $"Login-{i}",
-				Password = $"Password-{i}",
+				Password = TextEncoder.Encode($"Password-{i}"),
 				UseSSL = i % 2 == 0
 			}).ToList();
 

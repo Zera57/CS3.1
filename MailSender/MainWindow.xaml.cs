@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.Net;
 using System.Net.Mail;
 using System.Security;
+using MailSender.Models;
+using MailSenderService_lib;
 
 namespace MailSender
 {
@@ -27,70 +29,31 @@ namespace MailSender
 		{
 			InitializeComponent();
 		}
-		private void SendButton_Click(object sender, RoutedEventArgs e)
+
+		private void SendButton_Click(object Sender, RoutedEventArgs e)
 		{
-			/*if (TBLogin.Text.Length != 0 && TBPassword.Password.Length != 0 && TBEmailto.Text.Length != 0 && TBSubject.Text.Length != 0 && TBMessage.Text.Length != 0)
+			if (!(SenderList.SelectedItem is Sender sender)) return;
+			if (!(RecipientList.SelectedItem is Recipient recipient)) return;
+			if (!(ServerList.SelectedItem is Server server)) return;
+			if (!(MessageList.SelectedItem is Message message)) return;
+
+			var send_service = new MailSenderService
 			{
-				EmailSendServiceClass senderService = new EmailSendServiceClass(Data.host, Data.port);
-
-				senderService.InitMessage(TBSubject.Text, TBMessage.Text, new MailAddress(TBLogin.Text), new MailAddress(TBEmailto.Text));
-
-				senderService.Creditionals(TBLogin.Text, TBPassword.SecurePassword);
-
-				senderService.SendMessage();
-			}
-			else { MessageBox.Show("Type all data"); }*/
-		}
-
-		public static class Data
-		{
-			public static string host = "smtp.gmail.com";
-			public static int port = 587;
-
-
-		}
-	}
-
-	public class EmailSendServiceClass
-	{
-		SmtpClient client;
-		MailMessage message;
-
-
-		public EmailSendServiceClass(string host, int port)
-		{
-			client = new SmtpClient(host, port);
-			client.EnableSsl = true;
-		}
-
-		public void InitMessage(string subject, string body, MailAddress from, MailAddress to)
-		{
-			message = new MailMessage(from, to);
-			message.Subject = subject;
-			message.Body = body;
-		}
-
-		public void Creditionals(string login, SecureString password)
-		{
-			client.Credentials = new NetworkCredential
-			{
-				UserName = login,
-				SecurePassword = password
+				ServerAddress = server.Address,
+				ServerPort = server.Port,
+				UseSSL = server.UseSSL,
+				Login = server.Login,
+				Password = server.Password
 			};
-		}
 
-		public void SendMessage()
-		{
 			try
 			{
-				client.Send(message);
-				MessageBox.Show("Mail sended");
+				send_service.SendMessage(sender.Address, recipient.Address, message.Subject, message.Body);
 			}
-			catch (Exception ex)
+			catch (SmtpException error)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBox.Show("Ошибка при отправке почты " + error.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
 	}
-
 }

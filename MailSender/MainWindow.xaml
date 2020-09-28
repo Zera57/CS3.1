@@ -38,7 +38,7 @@
 				<DockPanel>
 					<ToolBarTray DockPanel.Dock="Top">
 						<ToolBar Header="Сервера" Band="0">
-							<ComboBox Margin="26.5,0,0,0" MinWidth="120" MaxWidth="220"
+							<ComboBox Name="ServerList" Margin="26.5,0,0,0" MinWidth="120" MaxWidth="220"
 									  SelectedIndex="0"
 									  ItemsSource="{x:Static data:TestData.Servers}"
 									  DisplayMemberPath="Address"
@@ -49,7 +49,7 @@
 							<Button Content="Del"/>
 						</ToolBar>
 						<ToolBar Header="Отправители" Band="1">
-							<ComboBox MinWidth="120" MaxWidth="220"
+							<ComboBox Name="SenderList" MinWidth="120" MaxWidth="220"
 									  SelectedIndex="0"
 									  ItemsSource="{x:Static data:TestData.Senders}">
 								<ComboBox.ItemTemplate>
@@ -72,7 +72,7 @@
 						</ToolBar>
 					</ToolBarTray>
 					<GroupBox Header="Список получателей">
-						<DataGrid ItemsSource="{x:Static data:TestData.Recepients}" 
+						<DataGrid Name="RecipientList" ItemsSource="{x:Static data:TestData.Recipients}" 
 								  AutoGenerateColumns="False"
 								  GridLinesVisibility="Vertical"
 								  AlternatingRowBackground="LightBlue"
@@ -114,15 +114,15 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 					<GroupBox Grid.Column="0" Header="Список писем">
-                        <ListBox Name="LB_Messages" ItemsSource="{x:Static data:TestData.Messages}" DisplayMemberPath="Subject"/>
+                        <ListBox Name="MessageList" ItemsSource="{x:Static data:TestData.Messages}" DisplayMemberPath="Subject"/>
                     </GroupBox>
 					<GroupBox Grid.Column="1" Header="Редактор">
 						<DockPanel>
 							<GroupBox Header="Заголовок" DockPanel.Dock="Top">
-                                <TextBox Text="{Binding SelectedItem.Subject, ElementName=LB_Messages, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Text="{Binding SelectedItem.Subject, ElementName=MessageList, UpdateSourceTrigger=PropertyChanged}"/>
 							</GroupBox>
 							<GroupBox Header="Тело письма">
-                                <TextBox Text="{Binding SelectedItem.Body, ElementName=LB_Messages}"/>
+                                <TextBox Text="{Binding SelectedItem.Body, ElementName=MessageList}"/>
                             </GroupBox>
 						</DockPanel>
 					</GroupBox>
