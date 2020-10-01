@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MailSenderService_lib
+namespace MailSenderService.lib
 {
 	class DBService
 	{

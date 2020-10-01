@@ -124,7 +124,7 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 					<GroupBox Grid.Column="0" Header="Список писем">
-						<ListBox x:Name="MessageList" ItemsSource="{Binding Messages}" DisplayMemberPath="Subject"/>
+						<ListBox x:Name="MessageList" ItemsSource="{Binding Messages}" SelectedItem="{Binding SelectedMessage}" DisplayMemberPath="Subject"/>
 					</GroupBox>
 					<GroupBox Grid.Column="1" Header="Редактор">
 						<DockPanel>

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace MailSender.lib.Service
 {
-	class SmtpMailService : IMailService
+	public class SmtpMailService : IMailService
 	{
 		public IMailSender GetSender(string Server, int Port, bool SSL, string Login, string Password)
 		{
@@ -64,4 +64,6 @@ namespace MailSender.lib.Service
 					}
 				}
 			}
+		}
+	}
 }

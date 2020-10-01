@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 
-namespace MailSenderService_lib
+namespace MailSenderService.lib
 {
 	public class MailSenderService
 	{

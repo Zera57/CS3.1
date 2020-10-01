@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MailSenderService_lib;
+using MailSenderService.lib;
 
 namespace MailSender.Data
 {
