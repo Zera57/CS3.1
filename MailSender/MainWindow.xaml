@@ -42,19 +42,19 @@
 						<ToolBar Header="Servers" Band="0">
 							<ComboBox x:Name="ServerList" Margin="12,0,8,0" MinWidth="130" MaxWidth="220"
 									  SelectedIndex="0"
-									  ItemsSource="{x:Static data:TestData.Servers}"
+									  ItemsSource="{Binding Servers}"
 									  SelectedItem="{Binding SelectedServer}"
 									  DisplayMemberPath="Address"
 									  SelectedValuePath="Address"
 							/>
 							<Button Content="Add"/>
 							<Button Content="Edit"/>
-							<Button Content="Del"/>
+							<Button Content="Del" Command="{Binding DeleteServerCommand}"/>
 						</ToolBar>
 						<ToolBar Header="Senders" Band="1">
 							<ComboBox x:Name="SenderList" MinWidth="130" MaxWidth="220"
 										SelectedIndex="0"
-										ItemsSource="{x:Static data:TestData.Senders}"
+										ItemsSource="{Binding Senders}"
 										SelectedItem="{Binding SelectedSender}">
 
 								<ComboBox.ItemTemplate>
@@ -77,11 +77,12 @@
 						</ToolBar>
 					</ToolBarTray>
 					<GroupBox Header="List of recipient">
-						<DataGrid x:Name="RecipientList" ItemsSource="{x:Static data:TestData.Recipients}" 
+						<DataGrid x:Name="RecipientList" ItemsSource="{Binding Recipients}" 
 								  AutoGenerateColumns="False"
 								  GridLinesVisibility="Vertical"
 								  AlternatingRowBackground="LightBlue"
-								  VerticalGridLinesBrush="Gray">
+								  VerticalGridLinesBrush="Gray"
+								  SelectedItem="{Binding SelectedRecipient}">
 							<DataGrid.Columns>
 								<DataGridTextColumn Header="ID" MinWidth="30"/>
 								<DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}"/>
@@ -123,7 +124,7 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 					<GroupBox Grid.Column="0" Header="Список писем">
-						<ListBox x:Name="MessageList" ItemsSource="{x:Static data:TestData.Messages}" DisplayMemberPath="Subject"/>
+						<ListBox x:Name="MessageList" ItemsSource="{Binding Messages}" DisplayMemberPath="Subject"/>
 					</GroupBox>
 					<GroupBox Grid.Column="1" Header="Редактор">
 						<DockPanel>
