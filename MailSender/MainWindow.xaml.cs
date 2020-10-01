@@ -30,7 +30,7 @@ namespace MailSender
 			InitializeComponent();
 		}
 
-		private void SendButton_Click(object Sender, RoutedEventArgs e)
+/*		private void SendButton_Click(object Sender, RoutedEventArgs e)
 		{
 			if (!(SenderList.SelectedItem is Sender sender)) return;
 			if (!(RecipientList.SelectedItem is Recipient recipient)) return;
@@ -64,6 +64,6 @@ namespace MailSender
 		private void OpenScheduler_Click(object sender, RoutedEventArgs e)
 		{
 			TabControl.SelectedIndex = 1;
-		}
+		}*/
 	}
 }
