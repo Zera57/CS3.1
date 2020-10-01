@@ -1,6 +1,9 @@
-﻿using System;
+﻿using MailSender.Infrastructure.Commands;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
+using System.Windows.Input;
 
 namespace MailSender.ViewModels
 {
@@ -17,6 +20,16 @@ namespace MailSender.ViewModels
 				_Title = value;
 				OnPropertyChanged("Title");
 			}
+		}
+
+		private ICommand _ShowDialogCommand;
+
+		public ICommand ShowDialogCommand => _ShowDialogCommand
+			??= new DelegateCommand(OnShowDialogCommandExecuted);
+
+		private void OnShowDialogCommandExecuted(object p)
+		{
+			MessageBox.Show("hell world");
 		}
 	}
 }

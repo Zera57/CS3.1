@@ -7,6 +7,7 @@
 		xmlns:m="clr-namespace:MailSender.Models"
 		xmlns:local="clr-namespace:MailSender"
 		xmlns:vm="clr-namespace:MailSender.ViewModels"
+		xmlns:commands="clr-namespace:MailSender.Infrastructure.Commands"
 		xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="MailSender.MainWindow"
 		mc:Ignorable="d"
 		Title="{Binding Title}" Height="650" Width="680">
@@ -102,9 +103,13 @@
 							<Calendar DisplayMode="Month"/>
 							<materialDesign:TimePicker/>
 							<StackPanel>
-								<Button Content="Отправить" Margin="0,3"/>
-								<Button Content="Запланировать" Margin="0,3"/>
-							</StackPanel>
+                                <Button Content="Отправить" Margin="0,3" Command="{Binding ShowDialogCommand}"/>
+                                <Button Content="Запланировать" Margin="0,3">
+                                    <Button.Command>
+                                        <commands:CloseWindowCommand/>
+                                    </Button.Command>
+                                </Button>
+                            </StackPanel>
 						</StackPanel>
 					</GroupBox>
 					<GroupBox Grid.Column="1" Header="Задания">
