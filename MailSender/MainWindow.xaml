@@ -65,7 +65,7 @@
 							</ComboBox>
 							<Button Content="Add"/>
 							<Button Content="Edit"/>
-							<Button Content="Del"/>
+							<Button Content="Del" Command="{Binding DeleteSenderCommand}"/>
 						</ToolBar>
 						<ToolBar Band="0">
 							<Button Content="Перейти в планировщик"/>
@@ -83,6 +83,13 @@
 								  AlternatingRowBackground="LightBlue"
 								  VerticalGridLinesBrush="Gray"
 								  SelectedItem="{Binding SelectedRecipient}">
+							<DataGrid.ContextMenu>
+								<ContextMenu>
+									<MenuItem Header="Add"/>
+									<MenuItem Header="Edit" />
+									<MenuItem Header="Delete" Command="{Binding DeleteRecipientCommand}"/>
+								</ContextMenu>
+							</DataGrid.ContextMenu>
 							<DataGrid.Columns>
 								<DataGridTextColumn Header="ID" MinWidth="30"/>
 								<DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}"/>
@@ -102,7 +109,7 @@
 						<StackPanel CanHorizontallyScroll="True">
 							<Calendar DisplayMode="Month"/>
 							<StackPanel>
-								<Button Content="Отправить" Margin="0,3" Command="{Binding ShowDialogCommand}"/>
+								<Button Content="Отправить" Margin="0,3" Command="{Binding SendMailCommand}"/>
 								<Button Content="Запланировать" Margin="0,3">
 									<Button.Command>
 										<commands:CloseWindowCommand/>
@@ -124,7 +131,15 @@
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 					<GroupBox Grid.Column="0" Header="Список писем">
-						<ListBox x:Name="MessageList" ItemsSource="{Binding Messages}" SelectedItem="{Binding SelectedMessage}" DisplayMemberPath="Subject"/>
+						<ListBox x:Name="MessageList" ItemsSource="{Binding Messages}" SelectedItem="{Binding SelectedMessage}" DisplayMemberPath="Subject">
+							<ListBox.ContextMenu>
+								<ContextMenu>
+									<MenuItem Header="Add"/>
+									<MenuItem Header="Edit" />
+									<MenuItem Header="Delete" Command="{Binding DeleteMessageCommand}"/>
+								</ContextMenu>
+							</ListBox.ContextMenu>
+						</ListBox>
 					</GroupBox>
 					<GroupBox Grid.Column="1" Header="Редактор">
 						<DockPanel>

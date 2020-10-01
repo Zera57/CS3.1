@@ -100,16 +100,7 @@ namespace MailSender.ViewModels
 		}
 
 		#region Commands
-		private ICommand _ShowDialogCommand;
-
-		public ICommand ShowDialogCommand => _ShowDialogCommand
-			??= new DelegateCommand(OnShowDialogCommandExecuted);
-
-		private void OnShowDialogCommandExecuted(object p)
-		{
-			MessageBox.Show("hell world");
-		}
-
+		
 		private ICommand _DeleteServerCommand;
 
 		public ICommand DeleteServerCommand => _DeleteServerCommand
@@ -124,6 +115,54 @@ namespace MailSender.ViewModels
 
 			Servers.Remove(server);
 			SelectedServer = Servers.FirstOrDefault();
+		}
+
+		private ICommand _DeleteSenderCommand;
+
+		public ICommand DeleteSenderCommand => _DeleteSenderCommand
+			??= new DelegateCommand(OnDeleteSenderCommandExecuted, CanDeleteSenderExecute);
+
+		private bool CanDeleteSenderExecute(object p) => p is Sender || SelectedSender != null;
+
+		private void OnDeleteSenderCommandExecuted(object p)
+		{
+			var sender = p as Sender ?? SelectedSender;
+			if (sender is null) return;
+
+			Senders.Remove(sender);
+			SelectedSender = Senders.FirstOrDefault();
+		}
+
+		private ICommand _DeleteRecipientCommand;
+
+		public ICommand DeleteRecipientCommand => _DeleteRecipientCommand
+			??= new DelegateCommand(OnDeleteRecipientCommandExecuted, CanDeleteRecipientExecute);
+
+		private bool CanDeleteRecipientExecute(object p) => p is Recipient || SelectedRecipient != null;
+
+		private void OnDeleteRecipientCommandExecuted(object p)
+		{
+			var recipient = p as Recipient ?? SelectedRecipient;
+			if (recipient is null) return;
+
+			Recipients.Remove(recipient);
+			SelectedRecipient = Recipients.FirstOrDefault();
+		}
+
+		private ICommand _DeleteMessageCommand;
+
+		public ICommand DeleteMessageCommand => _DeleteMessageCommand
+			??= new DelegateCommand(OnDeleteMessageCommandExecuted, CanDeleteMessageExecute);
+
+		private bool CanDeleteMessageExecute(object p) => p is Message || SelectedMessage != null;
+
+		private void OnDeleteMessageCommandExecuted(object p)
+		{
+			var message = p as Message ?? SelectedMessage;
+			if (message is null) return;
+
+			Messages.Remove(message);
+			SelectedMessage = Messages.FirstOrDefault();
 		}
 
 		private ICommand _SendMailCommand;
