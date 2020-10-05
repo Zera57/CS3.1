@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MailSender.Models
+namespace MailSender.lib.Models
 {
-	public class Sender
+	public class Recipient
 	{
 		public string Name { get; set; }
 

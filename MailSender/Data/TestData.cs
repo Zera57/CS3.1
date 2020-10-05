@@ -1,9 +1,9 @@
-﻿using MailSender.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MailSenderService.lib;
+using MailSender.lib.Models;
 
 namespace MailSender.Data
 {
@@ -19,7 +19,7 @@ namespace MailSender.Data
 		public static List<Recipient> Recipients { get; } = Enumerable.Range(1, 10)
 			.Select(i => new Recipient
 			{
-				Name = $"Получатель {i}",
+				Name = $"Отправитель {i}",
 				Address = $"recipient_{i}@server.com"
 			}).ToList();
 
