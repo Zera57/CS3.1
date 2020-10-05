@@ -4,17 +4,17 @@ using System.Text;
 
 namespace MailSender.lib.Models.Base
 {
-	public class Entitie
+	public abstract class Entity
 	{
 		public int ID { get; set; }
 	}
 
-	public class NamedEntitie : Entitie
+	public abstract class NamedEntitie : Entity
 	{
-		public string Name { get; set; }
+		public virtual string Name { get; set; }
 	}
 
-	public class Person : NamedEntitie
+	public abstract class Person : NamedEntitie
 	{
 		public string Address { get; set; }
 	}

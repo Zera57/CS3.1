@@ -84,7 +84,7 @@
 							<ColumnDefinition Width="2.5*"/>
 						</Grid.ColumnDefinitions>
 						<v:RecipientsView Grid.Column="0"/>
-						
+						<v:RecipientsEditor Grid.Column="1"/>
 					</Grid>
 				</DockPanel>
 			</TabItem>
