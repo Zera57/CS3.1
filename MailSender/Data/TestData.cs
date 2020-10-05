@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MailSenderService_lib;
+using MailSenderService.lib;
 
 namespace MailSender.Data
 {
@@ -19,7 +19,7 @@ namespace MailSender.Data
 		public static List<Recipient> Recipients { get; } = Enumerable.Range(1, 10)
 			.Select(i => new Recipient
 			{
-				Name = $"Отправитель {i}",
+				Name = $"Получатель {i}",
 				Address = $"recipient_{i}@server.com"
 			}).ToList();
 
