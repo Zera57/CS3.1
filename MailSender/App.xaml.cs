@@ -21,6 +21,7 @@ namespace MailSender
 		private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
 		{
 			services.AddSingleton<MainWindowViewModel>();
+			services.AddSingleton<IEncryptorService, Rfc2898Encryptor>();
 			services.AddTransient<IMailService, SmtpMailService>();
 		}
 	}

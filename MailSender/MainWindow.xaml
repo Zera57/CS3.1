@@ -4,9 +4,9 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:data="clr-namespace:MailSender.Data"
-		xmlns:m="clr-namespace:MailSender.Models"
 		xmlns:local="clr-namespace:MailSender"
 		xmlns:commands="clr-namespace:MailSender.Infrastructure.Commands"
+		xmlns:v="clr-namespace:MailSender.Views"
 		x:Class="MailSender.MainWindow"
 		DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
 		Title="{Binding Title}" Height="650" Width="680">
@@ -78,27 +78,14 @@
 							<Button Content="Del"/>
 						</ToolBar>
 					</ToolBarTray>
-					<GroupBox Header="List of recipient">
-						<DataGrid x:Name="RecipientList" ItemsSource="{Binding Recipients}" 
-								  AutoGenerateColumns="False"
-								  GridLinesVisibility="Vertical"
-								  AlternatingRowBackground="LightBlue"
-								  VerticalGridLinesBrush="Gray"
-								  SelectedItem="{Binding SelectedRecipient}">
-							<DataGrid.ContextMenu>
-								<ContextMenu>
-									<MenuItem Header="Add"/>
-									<MenuItem Header="Edit" />
-									<MenuItem Header="Delete" Command="{Binding DeleteRecipientCommand}"/>
-								</ContextMenu>
-							</DataGrid.ContextMenu>
-							<DataGrid.Columns>
-								<DataGridTextColumn Header="ID" MinWidth="30"/>
-								<DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}"/>
-								<DataGridTextColumn Header="Адрес" MinWidth="160" Binding="{Binding Address}"/>
-							</DataGrid.Columns>
-						</DataGrid>
-					</GroupBox>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="5*"/>
+							<ColumnDefinition Width="2.5*"/>
+						</Grid.ColumnDefinitions>
+						<v:RecipientsView Grid.Column="0"/>
+						<v:RecipientsEditor Grid.Column="1"/>
+					</Grid>
 				</DockPanel>
 			</TabItem>
 			<TabItem Header="Планировщик">

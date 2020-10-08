@@ -1,10 +1,11 @@
-﻿using System;
+﻿using MailSender.lib.Models.Base;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MailSender.Models
+namespace MailSender.lib.Models
 {
-	class Message
+	public class Message : Entity
 	{
 		public string Subject { get; set; }
 		public string Body { get; set; }
