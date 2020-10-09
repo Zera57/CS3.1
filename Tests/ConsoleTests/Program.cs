@@ -9,24 +9,55 @@ namespace ConsoleTests
 	{
 		static void Main(string[] args)
 		{
-			var Timer_Thread = new Thread(Timer);
+			#region
+			//var Timer_Thread = new Thread(Timer);
 
-			Timer_Thread.Name = "timer";
+			//Timer_Thread.Name = "timer";
 
-			Timer_Thread.Start();
+			//Timer_Thread.Start();
 
-			Console.WriteLine("Main thread is done.");
-			ThreadInfo();
+			//Console.WriteLine("Main thread is done.");
+			//ThreadInfo();
+			#endregion
+			Console.WriteLine("Type number");
+			factorial(Convert.ToInt32(Console.ReadLine()));
 		}
 
-		public static void Timer()
+		static long result = 1;
+		static bool done = false;
+
+		static void factorial(int n)
 		{
-			ThreadInfo();
-			while(true)
+			var func1 = new Thread(() => f1(n));
+			func1.Start();
+			var func2 = new Thread(() => f2(n));
+			func2.Start();
+		}
+
+		static void f1(int n)
+		{
+			for (int i = 1; i <= n/2; i++)
 			{
-				Console.Title = DateTime.Now.ToString("HH:mm:ss");
-				Thread.Sleep(100);
+				result *= i;
 			}
+			Print_Result(n);
+		}
+
+		static void f2(int n)
+		{
+			for (int i = n/2+1; i <= n; i++)
+			{
+				result *= i;
+			}
+			Print_Result(n);
+		}
+
+		static void Print_Result(int n)
+		{
+			if (done == false)
+				done = true;
+			else
+				Console.WriteLine($"Facrotial for {n} is {result}");
 		}
 
 		public static void ThreadInfo()
