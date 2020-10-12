@@ -1,71 +1,103 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
+using System.Threading;
 
 namespace ConsoleTests
 {
 	class Program
 	{
-		#region 1
-		//1. Посмотрите внимательно на приложение, при помощи которого мы тестировали возможность отправлять электронные письма и начали изучать WPF.
-		//Посмотрите внимательно на код.В коде есть несколько моментов, которые простительны для теста, но непростительны для серьёзного приложения.
-
-		//a.Первый момент: жестко заданные переменные в коде.Например, new SmtpClient("smtp.yandex.ru", 25), в этой строке две жестко заданные переменные:
-		//		"smtp.yandex.ru" – smtp-сервер и 25 – порт для этого сервера.В коде много и других жестко заданных переменных: адреса почтовых ящиков, тексты писем, тексты ошибок и др.
-		//Задание: добавить в проект WpfTestMailSender public static class, без конструктора и методов.Определить в этом классе статические переменные
-		//		и задать им значения.В коде использовать эти переменные вместо жестко заданных.
-
-		//b.Второй момент, который также простителен для тестовой программы и нежелателен для более или менее серьезного приложения. Код, который описывает форму,
-		//		и код, который занимается непосредственно рассылкой, содержится в одном классе.
-		//Задание: добавить к проекту WpfTestMailSender public class, назвать его, например, EmailSendServiceClass с конструктором.Создать в этом классе
-		//		методы (или метод), которые будут заниматься рассылкой писем.Класс надо создать таким образом, чтобы его можно было легко перенести в другой проект.
-
-		//c.В коде присутствует MessageBox с выводом ошибки в случае невозможности отправить письма. В принципе, MessabeBox — не криминал и даже в серьезных
-		//		проектах они присутствуют, но всё-таки окно со своим стилем выглядит лучше.
-		//Задание: по аналогии с формой, которая выводит сообщение «Работа завершена», создайте ещё одну для вывода текста ошибки.Цвет текста ошибки пусть
-		//		будет красным. Также добавьте кнопку «ОК», которая будет закрывать форму.
-		#endregion
-		#region 2
-		//2. Теперь задание на укрепление знаний технологии WPF.
-		//a.Добавить на главное окно тестового проекта WpfTestMailSender, в любое место формы два контрола TextBox, одно для названия письма, второе 
-		//		для самого текста письма.И сделайте так, чтобы название письма и текст письма брались из этих контролов.
-
-		//b.Скачать библиотеку стилей или тем (theme) с сайта http://wpfthemes.codeplex. Как описано в главе Изменение стиля приложения WPF, выберите 
-		//		любой стиль по своему усмотрению и замените стиль, сделайте так же, как было описано на уроке.
-
-		//c.Поиграйте с контролами тестового приложения WpfTestMailSender, поменяйте их свойства, поразмещайте в разных местах окна.Поменяйте основную 
-		//		панель Grid на другие панели, которые мы рассматривали на уроке.
-		#endregion
-		#region 3
-		//3. Заменить название основного окна и класса приложения MailSender, MainWindow на WpfMailSender, сделать по аналогии с тем, как мы меняли 
-		//		название главного окна у тестового приложения WpfTestMailSender на уроке.
-		#endregion
-
 		static void Main(string[] args)
 		{
-			var from = new MailAddress("svetik.avtonomov@gmail.com");
-			var to = new MailAddress("svetik.avtonomov2000@gmail.com");
+			#region
+			//var Timer_Thread = new Thread(Timer);
 
-			var message = new MailMessage(from, to);
+			//Timer_Thread.Name = "timer";
+
+			//Timer_Thread.Start();
+
+			//Console.WriteLine("Main thread is done.");
+			//ThreadInfo();
+			#endregion
+			Console.WriteLine("Type number");
+			factorial(Convert.ToInt32(Console.ReadLine()));
+		}
+
+		static long f_result = 1;
+		static bool f_done = false;
+
+		static long s_result = 0;
+		static bool s_done = false;
 
 
-			message.Subject = "Заголовок письма" + DateTime.Now;
-			message.Body = "Текст письма" + DateTime.Now;
+		static void factorial(int n)
+		{
+			var func1 = new Thread(() => f1(n));
+			func1.Start();
+			var func2 = new Thread(() => f2(n));
+			func2.Start();
+			var sum1 = new Thread(() => s1(n));
+			sum1.Start();
+			var sum2 = new Thread(() => s2(n));
+			sum2.Start();
+		}
 
-			var client = new SmtpClient("smtp.gmail.com", 587);
-
-			client.EnableSsl = true;
-
-
-			client.Credentials = new NetworkCredential
+		static void f1(int n)
+		{
+			for (int i = 1; i <= n/2; i++)
 			{
-				UserName = "",
-				Password = ""
-			};
+				f_result *= i;
+			}
+			Print_F_Result(n);
+		}
 
-			client.Send(message);
+		static void f2(int n)
+		{
+			for (int i = n/2+1; i <= n; i++)
+			{
+				f_result *= i;
+			}
+			Print_F_Result(n);
+		}
 
-			Console.WriteLine("Hello World!");
+		static void s1(int n)
+		{
+			for (int i = 1; i <= n / 2; i++)
+			{
+				s_result += i;
+			}
+			Print_S_Result(n);
+		}
+
+		static void s2(int n)
+		{
+			for (int i = n / 2 + 1; i < n; i++)
+			{
+				s_result += i;
+			}
+			Print_S_Result(n);
+		}
+
+		static void Print_F_Result(int n)
+		{
+			if (f_done == false)
+				f_done = true;
+			else
+				Console.WriteLine($"Facrotial for {n} is {f_result}");
+		}
+
+		static void Print_S_Result(int n)
+		{
+			if (s_done == false)
+				s_done = true;
+			else
+				Console.WriteLine($"Sum of all numbers bellow {n} is {s_result}");
+		}
+
+		public static void ThreadInfo()
+		{
+			var thread = Thread.CurrentThread;
+			Console.WriteLine($"id:\t\t{thread.ManagedThreadId}; \nname:\t\t{thread.Name}; \npriority:\t{thread.Priority}\n");
 		}
 	}
 }
