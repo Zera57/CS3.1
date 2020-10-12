@@ -31,7 +31,7 @@ namespace ConsoleTests
 
 			task.Wait();
 
-			Console.WriteLine("Задача выполнена");
+			Console.WriteLine("Программа выполнена");
 		}
 	}
 
