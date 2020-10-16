@@ -16,6 +16,8 @@ namespace MailSender.Data
 
 		public DbSet<Server> Servers { get; set; }
 
+		public DbSet<SchedulerTask> SchedulerTasks { get; set; }
+
 		public MailSenderDB(DbContextOptions<MailSenderDB> opt) : base(opt) { }
 	}
 }
