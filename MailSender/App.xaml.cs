@@ -19,7 +19,7 @@ namespace MailSender
 
 		public static IHost Hosting => _Hosting
 			??= Host.CreateDefaultBuilder(Environment.GetCommandLineArgs())
-			.ConfigureAppConfiguration(cfg => cfg.AddJsonFile("appconfig.json"))
+			.ConfigureAppConfiguration(cfg => cfg.AddJsonFile("appsettings.json"))
 			.ConfigureServices(ConfigureServices)
 			.Build();
 
