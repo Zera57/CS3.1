@@ -1,5 +1,7 @@
 ﻿using MailSender.Data;
+using MailSender.Data.Stores.InDB;
 using MailSender.lib.Interfaces;
+using MailSender.lib.Models;
 using MailSender.lib.Service;
 using MailSender.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +19,7 @@ namespace MailSender
 
 		public static IHost Hosting => _Hosting
 			??= Host.CreateDefaultBuilder(Environment.GetCommandLineArgs())
-			.ConfigureAppConfiguration(cfg => cfg.AddJsonFile("appconfig.json"))
+			.ConfigureAppConfiguration(cfg => cfg.AddJsonFile("appsettings.json"))
 			.ConfigureServices(ConfigureServices)
 			.Build();
 
@@ -30,6 +32,14 @@ namespace MailSender
 			services.AddTransient<IMailService, SmtpMailService>();
 			services.AddDbContext<MailSenderDB>(opt => opt.UseSqlServer(host.Configuration.GetConnectionString("Default")));
 			services.AddTransient<MailSenderDbInitializer>();
+
+			services.AddSingleton<IStore<Recipient>, RecipientsStoreInDB>();
+			services.AddSingleton<IStore<Sender>, SendersStoreInDB>();
+			services.AddSingleton<IStore<Server>, ServersStoreInDB>();
+			services.AddSingleton<IStore<Message>, MessagesStoreInDB>();
+			services.AddSingleton<IStore<SchedulerTask>, SchedulerTasksStoreInDB>();
+
+			services.AddSingleton<IMailSchedulerService, MailSchedulerService>();
 		}
 
 		protected override void OnStartup(StartupEventArgs e)

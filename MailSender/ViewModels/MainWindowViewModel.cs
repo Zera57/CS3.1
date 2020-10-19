@@ -1,29 +1,54 @@
-﻿using MailSender.Data;
-using MailSender.Infrastructure.Commands;
+﻿using MailSender.Infrastructure.Commands;
 using MailSender.lib.Interfaces;
 using MailSender.lib.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Windows;
 using System.Windows.Input;
 
 namespace MailSender.ViewModels
 {
 	class MainWindowViewModel : ViewModel
 	{
-		public MainWindowViewModel(IMailService MailService)
+		private ICommand _LoadDataCommand;
+
+		public ICommand LoadDataCommand => _LoadDataCommand
+			??= new DelegateCommand(OnLoadDataCommandExecuted, CanLoadDataCommandExecute);
+
+		private bool CanLoadDataCommandExecute(object p) => true; 
+
+		private void OnLoadDataCommandExecuted(object p)
+		{
+			Recipients = new ObservableCollection<Recipient>(_RecipientsStore.GetAll());
+			Senders = new ObservableCollection<Sender>(_SendersStore.GetAll());
+			Servers = new ObservableCollection<Server>(_ServersStore.GetAll());
+			Messages = new ObservableCollection<Message>(_MessagesStore.GetAll());
+		}
+
+		public MainWindowViewModel(IMailService MailService,
+			IStore<Recipient> RecipientsStore,
+			IStore<Sender> SendersStore,
+			IStore<Server> ServersStore,
+			IStore<Message> MessagesStore,
+			IStore<SchedulerTask> SchedulerTasksStore,
+			IMailSchedulerService MailSchedulerService)
 		{
 			_MailService = MailService;
-			Servers = new ObservableCollection<Server>(TestData.Servers);
-			Senders = new ObservableCollection<Sender>(TestData.Senders);
-			Recipients = new ObservableCollection<Recipient>(TestData.Recipients);
-			Messages = new ObservableCollection<Message>(TestData.Messages);
+
+			_RecipientsStore = RecipientsStore;
+			_SendersStore = SendersStore;
+			_ServersStore = ServersStore;
+			_MessagesStore = MessagesStore;
+			_SchedulerTasksStore = SchedulerTasksStore;
 		}
 
 		private readonly IMailService _MailService;
+
+		private readonly IStore<Recipient> _RecipientsStore;
+		private readonly IStore<Sender> _SendersStore;
+		private readonly IStore<Server> _ServersStore;
+		private readonly IStore<Message> _MessagesStore;
+		private readonly IStore<SchedulerTask> _SchedulerTasksStore;
+
 		private ObservableCollection<Server> _Servers;
 		private ObservableCollection<Sender> _Senders;
 		private ObservableCollection<Recipient> _Recipients;
