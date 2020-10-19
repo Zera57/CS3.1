@@ -5,12 +5,12 @@ using System.Text;
 
 namespace MailSender.lib.Interfaces
 {
-	interface IMailSchedulerService
+	public interface IMailSchedulerService
 	{
 		void Start();
 
 		void Stop();
 
-		void AddTask(DateTime Time, Sender sender, IEnumerable<Recipient>, Server Server, Message Message);
+		void AddTask(DateTime Time, Sender Sender, IEnumerable<Recipient> Recipients, Server Server, Message Message);
 	}
 }

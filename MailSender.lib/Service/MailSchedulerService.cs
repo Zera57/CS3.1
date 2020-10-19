@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MailSender.lib.Service
 {
-	class MailSchedulerService : IMailSchedulerService
+	public class MailSchedulerService : IMailSchedulerService
 	{
 		private readonly IStore<SchedulerTask> _TaskStore;
 		private readonly IMailService _MailService;
